@@ -52,9 +52,13 @@
     </div>
 
     <!-- DAY 3 -->
-    <div class="card bg-blue" data-day="3" onclick="goToDay(3)">
-      <div class="icon-frame"><img class="icon" src="assets/icon2.png" alt="Day 3 icon"></div>
-      <div class="day-label">DAY 3</div>
+    <div class="card bg-blue completed" data-day="1">
+      <div class="star-wrap">
+        <div class="star-frame">
+          <img class="star" src="assets/star.png" alt="">
+        </div>
+        <div class="done-label">WELL<br>DONE!</div>
+      </div>
     </div>
     
     <!-- DAY 4 -->
@@ -87,7 +91,7 @@
 <div class="modal-backdrop" id="oopsModal">
   <div class="modal-box">
     <img src="assets/icon4.png" alt="">
-    <p>Oops, you haven't reached this point yet.</p>
+    <p id="oopsText">Oops, you haven't reached this point yet.</p>
     <button onclick="closeOops()">OK</button>
   </div>
 </div>
@@ -108,6 +112,13 @@
   // Add more entries here as future days get unlocked (e.g. 4: 'game4.html').
   const DAY_PAGES = { 2: 'game.html', 3: 'draw.html' };
 
+  // Custom "oops" message overrides for specific days.
+  // Any day not listed here falls back to the default locked message.
+  const OOPS_MESSAGES = {
+    4: "TEMPORARY SWAP DAY!"
+  };
+  const DEFAULT_OOPS_MESSAGE = "Oops, you haven't reached this point yet.";
+
   function goToDay(day){
     if(DAY_PAGES[day]){
       pendingDay = day;
@@ -119,6 +130,7 @@
       return;
     }
     // Any other day is locked until unlocked via the same "completed" template as Day 1
+    document.getElementById('oopsText').textContent = OOPS_MESSAGES[day] || DEFAULT_OOPS_MESSAGE;
     document.getElementById('oopsModal').classList.add('open');
   }
 
